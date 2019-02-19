@@ -27,6 +27,7 @@ class Order {
     this.size = size;
     this.status = CREATED;
     this.id = null;
+    this.price = 0;
   }
 
   /**
@@ -61,6 +62,14 @@ class Order {
     if (!id) {
       throw new TypeError('Order.setId(): A valid id must be passed in');
     }
+    this.id = id;
+  }
+
+  setPrice(price) {
+    if (!price || typeof price !== 'number') {
+      throw new TypeError('Order.setPrice(): A valid price value must be supplied');
+    }
+    this.price = price;
   }
 }
 
