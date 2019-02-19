@@ -4,7 +4,11 @@ const {
   GDAX_SANDBOX_WEBSOCKET_URL, 
   GDAX_PRODUCTION_WEBSOCKET_URL,
   GDAX_SANDBOX_CLIENT_URL,
-  GDAX_PRODUCTION_CLIENT_URL
+  GDAX_PRODUCTION_CLIENT_URL,
+  PLACED,
+  CANCELLED,
+  BUY,
+  SELL
 } = require('../constants');
 
 /**
@@ -87,6 +91,64 @@ class Exchange {
           return reject(err);
         }
         return resolve(data);
+      });
+    });
+  }
+
+  /**
+   * Instance method that will place an order on the exchange
+   * @instance
+   * @public
+   * @memberof Exchange
+   * @param {Order} order - A valid order object
+   * @returns {Promise<Order>} - A resolved promise with the updated placed order object
+   */
+  placeOrder(order) {
+    if (!order) {
+      throw new TypeError('A valid order must be supplied');
+    }
+    const validSides = [BUY, SELL];
+    if (validSides.indexOf(order.side) === -1) {
+      throw new TypeError('Exchange.placeOrder(): A valid side must be specified on the order');
+    }
+    const {side, price, size, product_id} = order;
+    return new Promise((resolve, reject) => {
+      this.executor.placeOrder({
+        side,
+        price,
+        size,
+        product_id
+      }, (err, res, data) => {
+        if (err) {
+          return reject(err);
+        }
+        order.setId(data.id);
+        order.setStatus(PLACED);
+        return resolve(order);
+      })
+    });
+  }
+
+  /**
+   * An instance method to cancel an order on the exchange
+   * @instance
+   * @public
+   * @memberof Exchange
+   * @param {Order} order - The order to cancel on the exchange
+   * @returns {Promise<Order>} - A resolved promise with the order that was cancelled
+   */
+  cancelOrder(order) {
+    if (!order) {
+      throw new TypeError('Exchange.cancelOrder(): A valid order must be passed');
+    }
+    const {id} = order;
+    return new Promise((resolve, reject) => {
+      this.executor.cancelOrder(id, (err, res, data) => {
+        if (err) {
+          return reject(err);
+        }
+        order.setStatus(CANCELLED);
+        return resolve(order);
       });
     });
   }

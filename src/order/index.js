@@ -15,15 +15,18 @@ class Order {
    * @constructor
    * @memberof Order
    * @param {object} options - Options for the order
-   * @param {string} options.product - String representing product signature
+   * @param {string} options.product_id - String representing product signature
    * @param {number} options.size - Number representing the size of the order
+   * @param {string} options.side - The side of the order, either 'buy' or 'sell'
    * @returns {Order} - The newly instantiated order object
    */
   constructor({
-    product,
-    size
+    product_id,
+    size,
+    side
   }) {
-    this.product = product;
+    this.product_id = product_id;
+    this.side = side;
     this.size = size;
     this.status = CREATED;
     this.id = null;

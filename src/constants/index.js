@@ -7,3 +7,5 @@ module.exports.PLACED = 'placed';
 module.exports.CANCELLED = 'cancelled';
 module.exports.FILLED = 'filled';
 module.exports.PARTIAL = 'partial';
+module.exports.BUY = 'buy';
+module.exports.SELL = 'sell';

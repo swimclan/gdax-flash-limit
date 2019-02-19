@@ -13,15 +13,38 @@ const credentials = {
 };
 
 const Exchange = require('./src/exchange');
+const Order = require('./src/order');
 
-new Exchange({
+const order = new Order({
+  product_id: 'ETH-USD',
+  side: 'sell',
+  size: 0.01
+});
+
+order.setPrice(145.90);
+
+const exchange = new Exchange({
   sandbox: false,
   credentials
+});
+
+exchange.run()
+.then(() => {
+  console.log(order);
+  return exchange.placeOrder(order);
 })
-.run()
-.then((exchange) => {
-  exchange.websocket.on('message', (message) => console.log(message.type));
-  exchange.websocket.on('error', (error) => console.log(error));
+.catch((err) => {
+  console.log(err);
+})
+.then((order) => {
+  console.log(order);
+  return exchange.cancelOrder(order);
+})
+.catch((err) => {
+  console.log(err);
+})
+.then((order) => {
+  console.log(order);
 });
 
 
