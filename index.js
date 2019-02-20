@@ -13,6 +13,7 @@ const credentials = {
 };
 
 const Exchange = require('./src/exchange');
+const Broker = require('./src/broker');
 const Order = require('./src/order');
 
 const order = new Order({
@@ -28,23 +29,14 @@ const exchange = new Exchange({
   credentials
 });
 
-exchange.run()
-.then(() => {
-  console.log(order);
-  return exchange.placeOrder(order);
-})
-.catch((err) => {
-  console.log(err);
-})
-.then((order) => {
-  console.log(order);
-  return exchange.cancelOrder(order);
-})
-.catch((err) => {
-  console.log(err);
-})
-.then((order) => {
-  console.log(order);
-});
+const broker = new Broker({ exchange });
+
+async function main() {
+  await exchange.run();
+  broker.queueOrder(order);  
+}
+
+main();
+
 
 

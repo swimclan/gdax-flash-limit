@@ -1,5 +1,6 @@
 const {
   CREATED,
+  READY,
   PLACED,
   CANCELLED,
   FILLED,
@@ -13,6 +14,7 @@ const {
 class Order {
   /**
    * @constructor
+   * @public
    * @memberof Order
    * @param {object} options - Options for the order
    * @param {string} options.product_id - String representing product signature
@@ -43,6 +45,7 @@ class Order {
   setStatus(status) {
     const validStatuses = [
       CREATED,
+      READY,
       PLACED,
       CANCELLED,
       FILLED,
@@ -58,7 +61,7 @@ class Order {
    * An instance method for updating the id of an order
    * @instance
    * @public
-   * @memberof
+   * @memberof Order
    * @param {string} id - A valid order id from the exchange
    */
   setId(id) {

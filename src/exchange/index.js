@@ -37,6 +37,7 @@ class Exchange {
       passphrase,
       sandbox ? GDAX_SANDBOX_CLIENT_URL : GDAX_PRODUCTION_CLIENT_URL
     );
+    this.orderbooks = {};
     this.websocket = null;
     return this;
   }
@@ -61,7 +62,8 @@ class Exchange {
       .then((products) => {
         this.websocket = new WebsocketClient(
           products,
-          this.sandbox ? GDAX_SANDBOX_WEBSOCKET_URL : GDAX_PRODUCTION_WEBSOCKET_URL,
+          this.sandbox ?
+            GDAX_SANDBOX_WEBSOCKET_URL : GDAX_PRODUCTION_WEBSOCKET_URL,
           {
             key: this.executor.key,
             secret: this.executor.secret,
@@ -75,6 +77,30 @@ class Exchange {
         reject(err);
       });
     });
+  }
+
+  /**
+   * An instance method to retrieve an orderbook for a specified product
+   * @instance
+   * @public
+   * @memberof Exchange
+   * @param {string} product - The product id signature of the product orderbook to be retrieved
+   * @returns {Orderbook} - The orderbook for the product id specified
+   */
+  getOrderbook(product) {
+    if (!product || typeof product !== 'string') {
+      throw new TypeError('Exchange.getOrderbook(): Invalid product id specified');
+    }
+    if (!this.orderbooks[product]) {
+      const newOrderbook =
+      new Orderbook({
+        product,
+        sandbox: this.sandbox
+      });
+      newOrderbook.start();
+      this.orderbooks[product] = newOrderbook;
+    }
+    return this.orderbooks[product];
   }
 
   /**
