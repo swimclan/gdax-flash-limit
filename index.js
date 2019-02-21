@@ -16,13 +16,17 @@ const Exchange = require('./src/exchange');
 const Broker = require('./src/broker');
 const Order = require('./src/order');
 
-const order = new Order({
+const order1 = new Order({
   product_id: 'ETH-USD',
   side: 'sell',
   size: 0.01
 });
 
-order.setPrice(145.90);
+const order2 = new Order({
+  product_id: 'ETH-USD',
+  side: 'buy',
+  size: 0.01
+});
 
 const exchange = new Exchange({
   sandbox: false,
@@ -30,10 +34,16 @@ const exchange = new Exchange({
 });
 
 const broker = new Broker({ exchange });
+broker.on('placed', (placedOrder) => console.log(placedOrder));
+broker.on('cancelled', (cancelledOrder) => console.log(cancelledOrder));
+broker.on('fill', (filledOrder) => console.log(filledOrder));
+broker.on('error', (error) => console.log(error));
 
 async function main() {
-  await exchange.run();
-  broker.queueOrder(order);  
+  await exchange.run(); // need to wait for the websockets to connect
+  broker.run(); // starts broker listening for order fills
+  broker.queueOrder(order1);
+  broker.queueOrder(order2);
 }
 
 main();

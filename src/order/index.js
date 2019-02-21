@@ -71,11 +71,32 @@ class Order {
     this.id = id;
   }
 
+  /**
+   * An instance method for updating the id of an order
+   * @instance
+   * @public
+   * @memberof Order
+   * @param {number} price - A valid price for the limit order
+   */
   setPrice(price) {
     if (!price || typeof price !== 'number') {
       throw new TypeError('Order.setPrice(): A valid price value must be supplied');
     }
     this.price = price;
+  }
+
+  /**
+   * An instance method for updating the id of an order
+   * @instance
+   * @public
+   * @memberof Order
+   * @param {number} size - A valid size for the limit order
+   */
+  setSize(size) {
+    if (size == null || typeof size !== 'number') {
+      throw new TypeError('Order.setSize(): A valid size must be supplied');
+    }
+    this.size = size;
   }
 }
 

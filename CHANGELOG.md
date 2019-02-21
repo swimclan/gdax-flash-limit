@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Pre-released]
 
+## [0.1.0] - 2019-02-20
+### Feature
+- Broker filled order handling
+### Fixed
+- Multiple order placement bug 
+
 ## [0.0.3] - 2019-02-19
 ### Feature
 - Broker queue and handlers

@@ -1,17 +1,22 @@
+const {EventEmitter} = require('events');
 const {
   PLACED,
   READY,
   CANCELLED,
   PARTIAL,
   CREATED,
-  FILLED
+  FILLED,
+  CHANGE,
+  DONE,
+  MATCH
 } = require('../constants');
 
 /**
  * A class representing an exchange broker
  * @class
+ * @extends EventEmitter
  */
-class Broker {
+class Broker extends EventEmitter {
   /**
    * A constructor for building broker instances
    * @constructor
@@ -23,8 +28,22 @@ class Broker {
   constructor({
     exchange
   }) {
+    super();
     this.exchange = exchange;
     this.queues = {};
+    this.active = false;
+  }
+
+  /**
+   * A run method to start the broker
+   * @instance
+   * @public
+   * @memberof Broker
+   * @returns {void}
+   */
+  run() {
+    !this.active && (this.active = true);
+    this._dispatchFilledOrderHandler();
   }
 
   /**
@@ -59,6 +78,7 @@ class Broker {
    */
   _generateHandler(product_id) {
     const handler = function(orderbook) {
+      if (!this.active) return;
       this.queues[product_id].forEach(order => {
         const bestLimit = +orderbook[order.side === 'buy' ? 'bids' : 'asks'].value[0];
         switch(order.status) {
@@ -67,57 +87,68 @@ class Broker {
             order.setStatus(READY);
             this.exchange.placeOrder(order)
             .then((placedOrder) => {
-              console.log(placedOrder);
+              this.emit('placed', placedOrder);
               order.setId(placedOrder.id);
               order.setStatus(placedOrder.status);
             })
             .catch((err) => {
-              console.log(err);
+              this.emit('error', err.message || err);
             });
             break;
 
           case PLACED:
             if (bestLimit !== order.price) {
+              order.setStatus(READY);
               this.exchange.cancelOrder(order)
               .then((cancelledOrder) => {
+                this.emit('cancelled', cancelledOrder);
                 order.setStatus(cancelledOrder.status);
                 order.setPrice(bestLimit);
                 return this.exchange.placeOrder(order)
               })
               .catch((err) => {
-                console.log(err);
+                this.emit('error', err.message || err);
               })
               .then((placedOrder) => {
+                this.emit('placed', placedOrder);
                 order.setId(placedOrder.id);
                 order.setStatus(placedOrder.status);
               })
               .catch((err) => {
-                console.log(err);
+                this.emit('error', err.message || err);
               });
             }
-            break;
-
-          case CANCELLED:
-            order.setPrice(bestLimit);
-            this.exchange.placeOrder(order)
-            .then((placedOrder) => {
-              order.setId(placedOrder.id);
-              order.setStatus(placedOrder.status);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-            break;
-
-          case PARTIAL:
-            break;
-
-          case FILLED:
             break;
         }
       });
     }
     return handler.bind(this);
+  }
+
+  /**
+   * A private instance method for handling the user order match events to check for fills
+   * @instance
+   * @private
+   * @memberof Broker
+   * @returns {void}
+   */
+  _dispatchFilledOrderHandler() {
+    this.exchange.websocket.on('message', (message) => {
+      const wasActive = this.active;
+      this.active = false;
+      if (message.type === MATCH) {
+        const {maker_order_id, size, product_id} = message;
+        this.queues[product_id].forEach(order => {
+          if (order.id === maker_order_id) {
+            const remaining = parseFloat((order.size - +size).toFixed(8));
+            order.setStatus(remaining > 0 ? PARTIAL : FILLED);
+            order.setSize(remaining);
+            this.emit('fill', order);
+          }
+        });
+      }
+      this.active = wasActive;
+    });
   }
 }
 

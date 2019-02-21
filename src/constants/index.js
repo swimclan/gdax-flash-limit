@@ -10,3 +10,6 @@ module.exports.FILLED = 'filled';
 module.exports.PARTIAL = 'partial';
 module.exports.BUY = 'buy';
 module.exports.SELL = 'sell';
+module.exports.MATCH = 'match';
+module.exports.CHANGE = 'change';
+module.exports.DONE = 'done';

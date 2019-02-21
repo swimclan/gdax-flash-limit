@@ -69,7 +69,7 @@ class Exchange {
             secret: this.executor.secret,
             passphrase: this.executor.passphrase
           },
-          { channels: ['full'] }
+          { channels: ['user'] }
         );
         resolve(this);
       })
