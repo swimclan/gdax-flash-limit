@@ -1,11 +1,18 @@
 {
   "name": "gdax-flash-limit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A module to manage limit orders on Coinbase Pro through orderbook monitoring",
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/swimclan/gdax-flash-limit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/swimclan/gdax-flash-limit/issues"
   },
   "keywords": [
     "Coinbase",

@@ -2,12 +2,9 @@ const {EventEmitter} = require('events');
 const {
   PLACED,
   READY,
-  CANCELLED,
   PARTIAL,
   CREATED,
   FILLED,
-  CHANGE,
-  DONE,
   MATCH
 } = require('../constants');
 

@@ -1,7 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Pre-released]
+## [Released]
+
+## [1.0.0] - 2019-02-21
+### Feature
+- Readme for official first release
 
 ## [0.1.0] - 2019-02-20
 ### Feature
