@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.1] - 2019-02-21
+### Fix
+- Fixed partial order not updating bug
+
 ## [1.0.0] - 2019-02-21
 ### Feature
 - Readme for official first release
