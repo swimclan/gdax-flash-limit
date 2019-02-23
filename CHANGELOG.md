@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.2] - 2019-02-23
+### Fix
+- Defensive code around filled order handler to not inspect queue if there is no queue
+
 ## [1.0.1] - 2019-02-21
 ### Fix
 - Fixed partial order not updating bug

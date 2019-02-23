@@ -135,6 +135,7 @@ class Broker extends EventEmitter {
       this.active = false;
       if (message.type === MATCH) {
         const {maker_order_id, size, product_id} = message;
+        if (!product_id || !this.queues[product_id]) return;
         this.queues[product_id].forEach(order => {
           if (order.id === maker_order_id) {
             const remaining = parseFloat((order.size - +size).toFixed(8));
