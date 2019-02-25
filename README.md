@@ -14,6 +14,8 @@ Installation and instantiation is very easy to get started.  Here is a basic usa
 
 ```js
 
+const {Order, Broker, Exchange} = require('gdax-flash-limit');
+
 // Coinbase Pro (fake) API Credentials
 const credentials = {
   key: '82b308v2384bv230897bv208347bv28345bv',

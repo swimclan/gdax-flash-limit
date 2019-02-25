@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.5] - 2019-02-24
+### Feature
+- Updated README
+
 ## [1.0.4] - 2019-02-24
 ### Fix
 - Update gdax-l2-orderbook for websocket stability
