@@ -43,6 +43,56 @@ class Exchange {
   }
 
   /**
+   * A private method to initialize the websocket
+   * @intsance
+   * @private
+   * @memberof Exchange
+   * @param {object} options - An options hash
+   * @param {object[]} options._handlers - An array of socket event handlers to bind on connect
+   * @param {string[]} options.products - An array of product id strings
+   * @returns {void}
+   */
+  _initSocket({products, _handlers=null}) {
+    this.websocket = new WebsocketClient(
+      products,
+      this.sandbox ?
+        GDAX_SANDBOX_WEBSOCKET_URL : GDAX_PRODUCTION_WEBSOCKET_URL,
+      {
+        key: this.executor.key,
+        secret: this.executor.secret,
+        passphrase: this.executor.passphrase
+      },
+      { channels: ['user'] }
+    );
+    if (_handlers) {
+      this.websocket._events = _handlers;
+    } else {
+      this.websocket.on('error', (err) => {
+        console.error(typeof error === 'object' ? JSON.stringify(err) : err);
+        this._resetWebsocket(products);
+      });
+    }
+  }
+
+  /**
+   * A private method to reset the socket connection in the case of connection failure
+   * @instance
+   * @private
+   * @memberof Exchange
+   * @param {string[]} products - A list of product ids for socket initialization
+   * @returns {void}
+   */
+  _resetWebsocket(products) {
+    if (this.websocket) {
+      const _handlers = { ...this.websocket._events };
+      this.websocket.removeAllListeners();
+      this.websocket.socket && this.websocket.socket.close();
+      this.websocket = null;
+      this._initSocket({_handlers, products});
+    }
+  }
+
+  /**
    * Instance method to run the exchange after instantiation.  This will spin up
    * the feed and get it ready for realtime orderbook monitoring
    * @instance
@@ -60,17 +110,7 @@ class Exchange {
         reject(err);
       })
       .then((products) => {
-        this.websocket = new WebsocketClient(
-          products,
-          this.sandbox ?
-            GDAX_SANDBOX_WEBSOCKET_URL : GDAX_PRODUCTION_WEBSOCKET_URL,
-          {
-            key: this.executor.key,
-            secret: this.executor.secret,
-            passphrase: this.executor.passphrase
-          },
-          { channels: ['user'] }
-        );
+        this._initSocket({products});
         resolve(this);
       })
       .catch((err) => {
