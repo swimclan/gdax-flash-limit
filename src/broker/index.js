@@ -99,6 +99,7 @@ class Broker extends EventEmitter {
               this.exchange.cancelOrder(order)
               .then((cancelledOrder) => {
                 this.emit('cancelled', cancelledOrder);
+                this.emit('canceled', cancelledOrder);
                 order.setStatus(cancelledOrder.status);
                 order.setPrice(bestLimit);
                 return this.exchange.placeOrder(order)

@@ -32,7 +32,7 @@ const exchange = new Exchange({
 // Get a Broker instance, inject the exchange and listen to the lifecycle events
 const broker = new Broker({ exchange });
 broker.on('placed', (placedOrder) => console.log(placedOrder));
-broker.on('cancelled', (cancelledOrder) => console.log(cancelledOrder));
+broker.on('canceled', (cancelledOrder) => console.log(cancelledOrder));
 broker.on('fill', (filledOrder) => console.log(filledOrder));
 broker.on('error', (error) => console.log(error));
 

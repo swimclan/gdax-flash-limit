@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.6] - 2019-02-25
+### Feature
+- Support 'canceled' event in addition to 'cancelled'
+
 ## [1.0.5] - 2019-02-24
 ### Feature
 - Updated README
