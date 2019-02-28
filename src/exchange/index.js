@@ -183,7 +183,8 @@ class Exchange {
         side,
         price,
         size,
-        product_id
+        product_id,
+        post_only: true
       }, (err, res, data) => {
         if (err) {
           return reject(err);
