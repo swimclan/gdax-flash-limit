@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.8] - 2019-03-02
+### Feature
+- Updated error logging
+
 ## [1.0.7] - 2019-02-27
 ### Feature
 - Made all orders `post_only` orders that will only execute as market-making
