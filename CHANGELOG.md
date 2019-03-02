@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.9] - 2019-03-02
+### Feature
+- Update L2 orderbook module dependency
+
 ## [1.0.8] - 2019-03-02
 ### Feature
 - Updated error logging
