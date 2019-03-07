@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.10] - 2019-03-06
+### Feature
+- Better error handling
+- Update gdax-l2-orderbook dependency for better error handling
+
 ## [1.0.9] - 2019-03-02
 ### Feature
 - Update L2 orderbook module dependency

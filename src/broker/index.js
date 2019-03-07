@@ -58,8 +58,12 @@ class Broker extends EventEmitter {
     const {product_id} = order;
     if (!this.queues[product_id]) {
       this.queues[product_id] = new OrderQueue({order});
-      this.exchange.getOrderbook(product_id)
-        .on('change', this._generateHandler(product_id));
+      const orderbook = this.exchange.getOrderbook(product_id);
+      orderbook.on('change', this._generateHandler(product_id));
+      orderbook.on('error', (error) => {
+        const message = `gdax-flash-limit - ${typeof error === 'object' ? JSON.stringify(error) : error}`;
+        this.emit('error', message);
+      });
     } else {
       this.queues[product_id].add(order);
     }
@@ -148,6 +152,14 @@ class Broker extends EventEmitter {
       }
       this.active = wasActive;
     });
+
+    this.exchange.websocket.on('error',
+      (error) => {
+        const message = `gdax-flash-limit - ${typeof error === 'object' ? JSON.stringify(error) : error}`;
+        console.log(message);
+        this.emit('error', message);
+      }
+    );
   }
 }
 

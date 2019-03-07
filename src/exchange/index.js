@@ -68,7 +68,6 @@ class Exchange {
       this.websocket._events = _handlers;
     } else {
       this.websocket.on('error', (err) => {
-        console.error(`gdax-flash-limit - ${typeof error === 'object' ? JSON.stringify(err) : err}`);
         this._resetWebsocket(products);
       });
     }
