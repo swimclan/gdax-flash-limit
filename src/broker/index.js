@@ -110,8 +110,10 @@ class Broker extends EventEmitter {
               })
               .catch((err) => {
                 this.emit('error', err.message || err);
+                return null;
               })
               .then((placedOrder) => {
+                if (placedOrder == null) return;
                 this.emit('placed', placedOrder);
                 order.setId(placedOrder.id);
                 order.setStatus(placedOrder.status);

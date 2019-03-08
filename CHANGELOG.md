@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.11] - 2019-03-06
+### Feature
+- Bail out of promise chain when cancel order fails
+
 ## [1.0.10] - 2019-03-06
 ### Feature
 - Better error handling
