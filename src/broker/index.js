@@ -2,7 +2,6 @@ const {EventEmitter} = require('events');
 const {
   PLACED,
   READY,
-  PARTIAL,
   CREATED,
   FILLED,
   MATCH
@@ -109,7 +108,8 @@ class Broker extends EventEmitter {
                 return this.exchange.placeOrder(order)
               })
               .catch((err) => {
-                this.emit('error', err.message || err);
+                order.setStatus(FILLED);
+                this.emit('error', `Cancel failed: ${err.message || err}`);
                 return null;
               })
               .then((placedOrder) => {
