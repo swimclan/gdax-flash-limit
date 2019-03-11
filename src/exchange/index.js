@@ -190,7 +190,7 @@ class Exchange {
           return reject(err);
         }
         order.setId(data.id);
-        order.setStatus(data.status !== REJECTED ? PLACED : CANCELLED);
+        order.setStatus(data.status !== REJECTED ? PLACED : REJECTED);
         return resolve(order);
       })
     });

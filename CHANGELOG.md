@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.14] - 2019-03-10
+### Feature
+- Reset REJECTED orders to CREATED to ensure the broker keeps it alive
+
 ## [1.0.13] - 2019-03-10
 ### Feature
 - Set order to canceled if post_only rejects it

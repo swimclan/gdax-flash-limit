@@ -1,7 +1,7 @@
 const {EventEmitter} = require('events');
 const {
   PLACED,
-  CANCELLED,
+  REJECTED,
   READY,
   CREATED,
   FILLED,
@@ -89,7 +89,10 @@ class Broker extends EventEmitter {
             this.exchange.placeOrder(order)
             .then((placedOrder) => {
               placedOrder.status === PLACED && this.emit('placed', placedOrder);
-              placedOrder.status === CANCELLED  && this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+              if (placedOrder.status === REJECTED) {
+                this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+                order.setStatus(CREATED);
+              }
             })
             .catch((err) => {
               this.emit('error', err.message || err);
@@ -113,7 +116,10 @@ class Broker extends EventEmitter {
               .then((placedOrder) => {
                 if (placedOrder == null) return;
                 placedOrder.status === PLACED && this.emit('placed', placedOrder);
-                placedOrder.status === CANCELLED  && this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+                if (placedOrder.status === REJECTED) {
+                  this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+                  order.setStatus(CREATED);
+                }
               })
               .catch((err) => {
                 this.emit('error', err.message || err);
