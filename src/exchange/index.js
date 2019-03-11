@@ -6,6 +6,7 @@ const {
   GDAX_SANDBOX_CLIENT_URL,
   GDAX_PRODUCTION_CLIENT_URL,
   PLACED,
+  REJECTED,
   CANCELLED,
   BUY,
   SELL
@@ -189,7 +190,7 @@ class Exchange {
           return reject(err);
         }
         order.setId(data.id);
-        order.setStatus(PLACED);
+        order.setStatus(data.status !== REJECTED ? PLACED : CANCELLED);
         return resolve(order);
       })
     });

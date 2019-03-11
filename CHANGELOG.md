@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.13] - 2019-03-10
+### Feature
+- Set order to canceled if post_only rejects it
+
 ## [1.0.12] - 2019-03-09
 ### Feature
 - Better logging on order cancels

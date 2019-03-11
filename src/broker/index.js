@@ -1,6 +1,7 @@
 const {EventEmitter} = require('events');
 const {
   PLACED,
+  CANCELLED,
   READY,
   CREATED,
   FILLED,
@@ -87,9 +88,8 @@ class Broker extends EventEmitter {
             order.setStatus(READY);
             this.exchange.placeOrder(order)
             .then((placedOrder) => {
-              this.emit('placed', placedOrder);
-              order.setId(placedOrder.id);
-              order.setStatus(placedOrder.status);
+              placedOrder.status === PLACED && this.emit('placed', placedOrder);
+              placedOrder.status === CANCELLED  && this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
             })
             .catch((err) => {
               this.emit('error', err.message || err);
@@ -101,9 +101,7 @@ class Broker extends EventEmitter {
               order.setStatus(READY);
               this.exchange.cancelOrder(order)
               .then((cancelledOrder) => {
-                this.emit('cancelled', cancelledOrder);
-                this.emit('canceled', cancelledOrder);
-                order.setStatus(cancelledOrder.status);
+                this.emit('cancelled', cancelledOrder) && this.emit('canceled', cancelledOrder);
                 order.setPrice(bestLimit);
                 return this.exchange.placeOrder(order)
               })
@@ -114,9 +112,8 @@ class Broker extends EventEmitter {
               })
               .then((placedOrder) => {
                 if (placedOrder == null) return;
-                this.emit('placed', placedOrder);
-                order.setId(placedOrder.id);
-                order.setStatus(placedOrder.status);
+                placedOrder.status === PLACED && this.emit('placed', placedOrder);
+                placedOrder.status === CANCELLED  && this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
               })
               .catch((err) => {
                 this.emit('error', err.message || err);

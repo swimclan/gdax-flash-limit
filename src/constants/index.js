@@ -13,3 +13,4 @@ module.exports.SELL = 'sell';
 module.exports.MATCH = 'match';
 module.exports.CHANGE = 'change';
 module.exports.DONE = 'done';
+module.exports.REJECTED = 'rejected';
