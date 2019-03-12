@@ -66,9 +66,18 @@ class Exchange {
       { channels: ['user'] }
     );
     if (_handlers) {
-      this.websocket._events = _handlers;
+      Object.entries(_handlers).forEach(([type, handler]) => {
+        if (Array.isArray(handler)) {
+          handler.forEach(fn => {
+            this.websocket.on(type, fn);
+          });
+        } else {
+          this.websocket.on(type, handler);
+        }
+      });
     } else {
       this.websocket.on('error', (err) => {
+        this.emit('error', err);
         this._resetWebsocket(products);
       });
     }

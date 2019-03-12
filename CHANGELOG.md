@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.15] - 2019-03-11
+### Fix
+- Updated socket reconnect event reassignment
+- Bumped gdax-l2-orderbook
+
 ## [1.0.14] - 2019-03-10
 ### Feature
 - Reset REJECTED orders to CREATED to ensure the broker keeps it alive
