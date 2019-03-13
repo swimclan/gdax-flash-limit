@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.16] - 2019-03-12
+### Fix
+- Bump gdax-l2-orderbook for a socket reset bugfix
+
 ## [1.0.15] - 2019-03-11
 ### Fix
 - Updated socket reconnect event reassignment
