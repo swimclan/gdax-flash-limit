@@ -40,6 +40,7 @@ class Exchange {
     );
     this.orderbooks = {};
     this.websocket = null;
+    this.products = {};
     return this;
   }
 
@@ -102,6 +103,21 @@ class Exchange {
   }
 
   /**
+   * Private instance method to set exchange products to an instance property
+   * @instance
+   * @private
+   * @memberof Exchange
+   * @param {object[]} products - An array collection of products from the executor exchange
+   * @returns {void}
+   */
+  _setProducts(products) {
+    this.products = products.reduce((acc, product) => {
+      acc[product.id] = product;
+      return acc;
+    }, {});
+  }
+
+  /**
    * Instance method to run the exchange after instantiation.  This will spin up
    * the feed and get it ready for realtime orderbook monitoring
    * @instance
@@ -113,6 +129,7 @@ class Exchange {
     return new Promise((resolve, reject) => {
       this.getProducts()
       .then((products) => {
+        this._setProducts(products);
         return products.map(product => product.id);
       })
       .catch((err) => {
