@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.0.18] - 2019-03-14
+### Fix
+- Reverting silly code that breaks things
+
 ## [1.0.17] - 2019-03-12
 ### Fix
 - Prevent order sizes less than product base min size

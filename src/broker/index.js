@@ -109,7 +109,6 @@ class Broker extends EventEmitter {
                 return this.exchange.placeOrder(order)
               })
               .catch((err) => {
-                order.setStatus(FILLED);
                 this.emit('error', `Cancel failed: ${err.message || err}`);
                 return null;
               })
