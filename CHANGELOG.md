@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.1.0] - 2019-03-14
+### Fix
+- Made broker error management more comprehensive
+
 ## [1.0.18] - 2019-03-14
 ### Fix
 - Reverting silly code that breaks things

@@ -34,6 +34,7 @@ const broker = new Broker({ exchange });
 broker.on('placed', (placedOrder) => console.log(placedOrder));
 broker.on('canceled', (cancelledOrder) => console.log(cancelledOrder));
 broker.on('fill', (filledOrder) => console.log(filledOrder));
+broker.on('rejected', (rejectedOrder) => console.log(rejectedOrder));
 broker.on('error', (error) => console.log(error));
 
 // Create an Order

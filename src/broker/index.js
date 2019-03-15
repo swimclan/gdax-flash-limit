@@ -90,11 +90,12 @@ class Broker extends EventEmitter {
             .then((placedOrder) => {
               placedOrder.status === PLACED && this.emit('placed', placedOrder);
               if (placedOrder.status === REJECTED) {
-                this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+                this.emit('rejected', placedOrder);
                 order.setStatus(CREATED);
               }
             })
             .catch((err) => {
+              order.setStatus(CREATED);
               this.emit('error', err.message || err);
             });
             break;
@@ -109,6 +110,7 @@ class Broker extends EventEmitter {
                 return this.exchange.placeOrder(order)
               })
               .catch((err) => {
+                order.setStatus(order.size >= +this.exchange.products[product_id].base_min_size ? PLACED : FILLED);
                 this.emit('error', `Cancel failed: ${err.message || err}`);
                 return null;
               })
@@ -116,11 +118,12 @@ class Broker extends EventEmitter {
                 if (placedOrder == null) return;
                 placedOrder.status === PLACED && this.emit('placed', placedOrder);
                 if (placedOrder.status === REJECTED) {
-                  this.emit('cancelled', placedOrder) && this.emit('canceled', placedOrder);
+                  this.emit('rejected', placedOrder);
                   order.setStatus(CREATED);
                 }
               })
               .catch((err) => {
+                order.setStatus(CREATED);
                 this.emit('error', err.message || err);
               });
             }
