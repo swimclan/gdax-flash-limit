@@ -3,6 +3,7 @@ const {
   READY,
   PLACED,
   CANCELLED,
+  REJECTED,
   FILLED,
   PARTIAL
 } = require('../constants');
@@ -48,6 +49,7 @@ class Order {
       READY,
       PLACED,
       CANCELLED,
+      REJECTED,
       FILLED,
       PARTIAL
     ];

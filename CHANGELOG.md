@@ -3,7 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
-## [1.1.0] - 2019-03-15
+## [1.1.2] - 2019-03-15
+### Fix
+- Accept REJECTED as a valid order status
+
+## [1.1.1] - 2019-03-15
 ### Fix
 - Update gdax-l2-orderbook for socket reset bug fix
 
