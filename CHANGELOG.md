@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.1.0] - 2019-03-15
+### Fix
+- Update gdax-l2-orderbook for socket reset bug fix
+
 ## [1.1.0] - 2019-03-14
 ### Fix
 - Made broker error management more comprehensive
