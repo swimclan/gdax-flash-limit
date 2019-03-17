@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.1.3] - 2019-03-17
+### Fix
+- Fixed erroneous emitter in exchange on socket error
+
 ## [1.1.2] - 2019-03-15
 ### Fix
 - Accept REJECTED as a valid order status

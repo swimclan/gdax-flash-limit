@@ -78,7 +78,6 @@ class Exchange {
       });
     } else {
       this.websocket.on('error', (err) => {
-        this.emit('error', err);
         this._resetWebsocket(products);
       });
     }
