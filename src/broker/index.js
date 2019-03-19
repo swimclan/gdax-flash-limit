@@ -150,9 +150,9 @@ class Broker extends EventEmitter {
         if (!product_id || !this.queues[product_id]) return;
         this.queues[product_id].forEach(order => {
           if (order.id === maker_order_id) {
-            const remaining = parseFloat((order.size - +size).toFixed(8));
+            const remaining = parseFloat((order.remaining - +size).toFixed(8));
             order.setStatus(remaining >= +this.exchange.products[product_id].base_min_size ? PLACED : FILLED);
-            order.setSize(remaining);
+            order.setRemaining(remaining);
             this.emit('fill', order);
           }
         });

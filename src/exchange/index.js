@@ -202,12 +202,12 @@ class Exchange {
     if (validSides.indexOf(order.side) === -1) {
       throw new TypeError('Exchange.placeOrder(): A valid side must be specified on the order');
     }
-    const {side, price, size, product_id} = order;
+    const {side, price, remaining, product_id} = order;
     return new Promise((resolve, reject) => {
       this.executor.placeOrder({
         side,
         price,
-        size,
+        size: remaining,
         product_id,
         post_only: true
       }, (err, res, data) => {
@@ -216,6 +216,7 @@ class Exchange {
         }
         order.setId(data.id);
         order.setStatus(data.status !== REJECTED ? PLACED : REJECTED);
+        order.setFee(+data.fill_fees);
         return resolve(order);
       })
     });

@@ -31,9 +31,11 @@ class Order {
     this.product_id = product_id;
     this.side = side;
     this.size = size;
+    this.remaining = size;
     this.status = CREATED;
     this.id = null;
     this.price = 0;
+    this.fee = 0;
   }
 
   /**
@@ -65,6 +67,7 @@ class Order {
    * @public
    * @memberof Order
    * @param {string} id - A valid order id from the exchange
+   * @returns {void}
    */
   setId(id) {
     if (!id) {
@@ -73,6 +76,20 @@ class Order {
     this.id = id;
   }
 
+  /**
+   * An instance method to set the order's fill fee
+   * @instance
+   * @public
+   * @memberof Order
+   * @param {number} fee - A number representing the order fill fee
+   * @returns {void}
+   */
+  setFee(fee) {
+    if (!fee) {
+      throw new TypeError('Order.setFee(): A vaild fee float must be passed in');
+    }
+    this.fee = fee;
+  }
   /**
    * An instance method for updating the id of an order
    * @instance
@@ -94,11 +111,11 @@ class Order {
    * @memberof Order
    * @param {number} size - A valid size for the limit order
    */
-  setSize(size) {
+  setRemaining(size) {
     if (size == null || typeof size !== 'number') {
-      throw new TypeError('Order.setSize(): A valid size must be supplied');
+      throw new TypeError('Order.setRemaining(): A valid size must be supplied');
     }
-    this.size = size;
+    this.remaining = size;
   }
 }
 
