@@ -85,7 +85,7 @@ class Order {
    * @returns {void}
    */
   setFee(fee) {
-    if (!fee) {
+    if (fee == null) {
       throw new TypeError('Order.setFee(): A vaild fee float must be passed in');
     }
     this.fee = fee;

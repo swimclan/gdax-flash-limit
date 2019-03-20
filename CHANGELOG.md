@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.1] - 2019-03-18
+### Fix
+- Order set fee bug fix
+
 ## [1.2.0] - 2019-03-18
 ### Feature
 - Order remaining and fee attributes
