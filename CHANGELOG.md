@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.2] - 2019-03-20
+### Fix
+- Fixed major bug. Prevent cycling error on order cancel
+
 ## [1.2.1] - 2019-03-18
 ### Fix
 - Order set fee bug fix
