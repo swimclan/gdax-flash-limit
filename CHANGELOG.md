@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.4] - 2019-03-23
+### Fix
+- Trap 400 errors in broker
+
 ## [1.2.3] - 2019-03-21
 ### Fix
 - Better order cancel error messaging

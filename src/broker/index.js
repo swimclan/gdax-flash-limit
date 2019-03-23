@@ -110,7 +110,10 @@ class Broker extends EventEmitter {
                 return this.exchange.placeOrder(order)
               })
               .catch((err) => {
-                order.setStatus(order.remaining >= +this.exchange.products[product_id].base_min_size ? PLACED : FILLED);
+                const errorMessage = err.message || err;
+                const isBadRequest = errorMessage.match(/HTTP\s400/);
+                const replaceOrder = order.remaining >= +this.exchange.products[product_id].base_min_size && !isBadRequest;
+                order.setStatus(replaceOrder ? PLACED : FILLED);
                 this.emit('error', `Cancel failed.  Order status set to: ${order.status}.  Error message:  ${err.message || err}`);
                 return null;
               })
