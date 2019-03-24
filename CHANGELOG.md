@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.5] - 2019-03-23
+### Feature
+- Order set last fill size
+- Fee accumulation on order
+
 ## [1.2.4] - 2019-03-23
 ### Fix
 - Trap 400 errors in broker

@@ -31,6 +31,7 @@ class Order {
     this.product_id = product_id;
     this.side = side;
     this.size = size;
+    this.lastFillSize = 0;
     this.remaining = size;
     this.status = CREATED;
     this.id = null;
@@ -91,7 +92,7 @@ class Order {
     this.fee = fee;
   }
   /**
-   * An instance method for updating the id of an order
+   * An instance method for updating the limit price of an order
    * @instance
    * @public
    * @memberof Order
@@ -105,17 +106,31 @@ class Order {
   }
 
   /**
-   * An instance method for updating the id of an order
+   * An instance method for updating the remaining size of an order
    * @instance
    * @public
    * @memberof Order
-   * @param {number} size - A valid size for the limit order
+   * @param {number} size - A valid size for the remaining of the limit order
    */
   setRemaining(size) {
     if (size == null || typeof size !== 'number') {
       throw new TypeError('Order.setRemaining(): A valid size must be supplied');
     }
     this.remaining = size;
+  }
+
+  /**
+   * An instance method for updating the id of an order
+   * @instance
+   * @public
+   * @memberof Order
+   * @param {number} size - A valid size for the last fill of the limit order
+   */
+  setLastFillSize(size) {
+    if (size == null || typeof size !== 'number') {
+      throw new TypeError('Order.setLastFillSize(): A valid size must be supplied');
+    }
+    this.lastFillSize = size;
   }
 }
 

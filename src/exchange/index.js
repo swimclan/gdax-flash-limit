@@ -216,7 +216,7 @@ class Exchange {
         }
         order.setId(data.id);
         order.setStatus(data.status !== REJECTED ? PLACED : REJECTED);
-        order.setFee(+data.fill_fees || 0);
+        order.setFee(order.fee + +data.fill_fees || 0);
         return resolve(order);
       })
     });
