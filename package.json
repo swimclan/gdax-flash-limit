@@ -1,6 +1,6 @@
 {
   "name": "gdax-flash-limit",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "A module to manage limit orders on Coinbase Pro through orderbook monitoring",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "license": "ISC",
   "dependencies": {
     "gdax": "^0.8.0",
-    "gdax-l2-orderbook": "^1.0.7"
+    "gdax-l2-orderbook": "^1.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",

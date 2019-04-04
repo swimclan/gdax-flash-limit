@@ -98,6 +98,8 @@ class Exchange {
       this.websocket.socket && this.websocket.socket.close();
       this.websocket = null;
       this._initSocket({_handlers, products});
+    } else {
+      this._initSocket({products});
     }
   }
 

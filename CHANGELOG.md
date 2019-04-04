@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.2.6] - 2019-04-03
+### Feature
+- More robust socket keep alive
+
 ## [1.2.5] - 2019-03-23
 ### Feature
 - Order set last fill size
